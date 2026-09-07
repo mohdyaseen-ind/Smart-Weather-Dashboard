@@ -18,7 +18,7 @@ async function getWeathercity(city){
         const response = await fetch(url)
         const data = await response.json()
     
-        if (data.cod){
+        if (data.cod == 200){
             weatherDisplay.innerHTML = `
                 <h2>${data.name}, ${data.sys.country}</h2>
                 <p>🌡️ ${data.main.temp}°C</p>
@@ -26,8 +26,11 @@ async function getWeathercity(city){
                 <p>💨 Wind: ${data.wind.speed} m/s</p>
             `
         }
-        else{
+        else if (data.cod == 404){
             weatherDisplay.innerHTML = "<p>City Not Found</p>"
+        }
+        else{
+            weatherDisplay.innerHTML = "<p>Failed to Fetch API</p>"
         }
     }
     catch(err){
